@@ -12,8 +12,8 @@
 require 'minitest/autorun'
 
 class CheckSubSequence
-  def call(s, words)
-    stack = s.split('')
+  def call(string, words)
+    stack = string.split('')
     words.select { |word| contained?(stack.dup, word) }.count
   end
 
@@ -26,7 +26,7 @@ class CheckSubSequence
       char_index += 1 if character == word[char_index]
     end
 
-    char_index >= word.length
+    char_index == word.length
   end
 end
 
