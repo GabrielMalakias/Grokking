@@ -7,11 +7,21 @@ class BreathFirstTest < Minitest::Test
   end
 
   def test_when_there_is_a_mango_seller
-    assert 'thom', @breath_first.call(build_graph, method(:mango_seller?))
+    assert_equal 'thom', @breath_first.call(build_graph, method(:mango_seller?))
   end
 
   def test_when_there_isnt_a_mango_seller
-    assert 'thom', @breath_first.call(build_graph, method(:no_mango_seller))
+    assert_nil @breath_first.call(build_graph, method(:no_mango_seller))
+  end
+
+  def test_when_there_is_a_infinite_loop
+    graph = {}.tap do |g|
+      g['you'] = %w[peggy]
+      g['alice'] = %w[peggy]
+      g['peggy'] = %w[alice]
+    end
+
+    assert_nil @breath_first.call(graph, method(:mango_seller?))
   end
 
   private
